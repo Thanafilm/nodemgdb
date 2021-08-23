@@ -1,0 +1,3 @@
+{
+    "mongoURI" : "mongodb+srv://pheem:212224@prjdemo.rallh.mongodb.net/work?retryWrites=true&w=majority"
+}
