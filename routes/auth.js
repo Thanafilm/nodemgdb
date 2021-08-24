@@ -1,0 +1,18 @@
+const { signedCookie } = require('cookie-parser')
+const express = require('express')
+const router =express.Router()
+//import Controller
+const { signup,
+        signin,
+        signout,
+        requireSignin} = require('../controller/authen')
+const {userSignupValidator} = require('../validator/index')
+
+
+router.post('/signup',userSignupValidator,signup)
+router.post('/signin',signin)
+router.get('/signout',signout)
+router.get('/test',requireSignin ,(req,res) => {
+    res.send('test')
+})
+module.exports = router;
