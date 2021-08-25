@@ -19,9 +19,10 @@ app.use(expressValidator());
 const AuthRouter = require("./routes/auth")
 const UserRouter = require('./routes/user')
 const CategoryRouter = require('./routes/category')
+const ProductRouter = require('./routes/product')
 app.use('/api', AuthRouter)
 app.use('/api', UserRouter)
 app.use('/api', CategoryRouter)
-
+app.use('/api', ProductRouter)
 
 app.listen(3000)

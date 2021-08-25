@@ -10,7 +10,7 @@ const {create} = require('../controller/product')
 
 
 //Route
-router.post('/product/create',requireSignin,isAuth,isAdmin,create)
+router.post('/product/create/:userId',requireSignin,isAuth,isAdmin,create)
 
 router.param('userId', userById);
 module.exports = router
