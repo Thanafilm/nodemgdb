@@ -3,7 +3,7 @@ const app = express()
 const connectDB = require('./connect/db')
 const morgan = require('morgan')
 const expressValidator = require('express-validator');
-
+const cors = require('cors')
 const cookieParser = require('cookie-parser')
 // DB Connect
 connectDB();
@@ -14,6 +14,7 @@ app.use(express.json()) // To parse
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(expressValidator());
+app.use(cors())
 
 //Route
 const AuthRouter = require("./routes/auth")
@@ -25,4 +26,4 @@ app.use('/api', UserRouter)
 app.use('/api', CategoryRouter)
 app.use('/api', ProductRouter)
 
-app.listen(3000)
+app.listen(4000)
