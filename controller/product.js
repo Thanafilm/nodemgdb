@@ -20,7 +20,6 @@ exports.productById = (req, res, next, id) => {
 }
 
 exports.getproduct = (req, res) => {
-    // req.product.photo = undefined
     return res.json(req.product)
 }
 
@@ -44,8 +43,7 @@ exports.create = (req, res) => {
 
         let product = new Product(fields);
 
-        // 1kb = 1000
-        // 1mb = 1000000
+       
 
         if (files.photo) {
             // console.log("FILES PHOTO: ", files.photo);
