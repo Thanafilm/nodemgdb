@@ -1,9 +1,8 @@
 const User = require('../model/user')
 const jwt = require('jsonwebtoken')
 const expressJwt = require('express-jwt')
-const {errorHandler} = require('../helper/errors');
-const config = require('config')
-const secretKey = config.get('secret')
+const { errorHandler } = require('../helper/errors');
+const secretKey = process.env.SECRET
 
 exports.signup = (req, res) => {
     // console.log("req.body", req.body);
@@ -11,8 +10,8 @@ exports.signup = (req, res) => {
     user.save((err, user) => {
         if (err) {
             return res.status(400).json({
-                // error: errorHandler(err)
-                err : errorHandler(err)
+
+                err: errorHandler(err)
             });
         }
         user.salt = undefined;
@@ -41,26 +40,26 @@ exports.signin = (req, res) => {
         }
         // generate a signed token with user id and secret
         const { _id, name, lastname, email, role } = user;
-        const token = jwt.sign({  _id, email, name, lastname, role }, secretKey, { expiresIn: '1h' }) ;
-     
+        const token = jwt.sign({ _id, email, name, lastname, role }, secretKey, { expiresIn: '24h' });
+
         res.cookie('t', token);
-        
-       
+
+
         return res.json({ token, user: { _id, email, name, lastname, role } });
     });
 };
-exports.signout = (req,res) => {
+exports.signout = (req, res) => {
     res.clearCookie('t')
-    res.json({ message: "Signout Success"})
+    res.json({ message: "Signout Success" })
 }
 
 exports.requireSignin = expressJwt({
     secret: secretKey,
-    algorithms: ["HS256"], // added later
+    algorithms: ["HS256"],
     userProperty: "auth",
-  });
+});
 
-  exports.isAuth = (req, res, next) => {
+exports.isAuth = (req, res, next) => {
     let user = req.profile && req.auth && req.profile._id == req.auth._id;
     if (!user) {
         return res.status(403).json({
@@ -69,10 +68,10 @@ exports.requireSignin = expressJwt({
     }
     next();
 };
-exports.isAdmin = (req,res,next) => {
-    if(req.profile.role === 0) {
+exports.isAdmin = (req, res, next) => {
+    if (req.profile.role === 0) {
         return res.status(403).json({
-            error : "Admin resource ! Access Denied"
+            error: "Admin resource ! Access Denied"
         });
     }
     next()

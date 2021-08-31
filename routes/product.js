@@ -6,11 +6,12 @@ const { isAdmin, requireSignin, isAuth } = require('../controller/authen')
 const { userById } = require('../controller/user')
 
 //Import Controller
-const { create, productById, getproduct, deleteproduct, updateProduct, listProduct, listRelated, listCategories, listBySearch, photo } = require('../controller/product')
+const { create, productById, getproduct, deleteproduct, updateProduct, listProduct, listRelated, listCategories, listBySearch, photo, listSearch } = require('../controller/product')
 
 
 //Route
 router.get('/product/:productById', getproduct)
+router.get('/product', listSearch)
 router.post('/product/create/:userId', requireSignin, isAuth, isAdmin, create)
 router.put('/product/:productById/:userId', requireSignin, isAuth, isAdmin, updateProduct)
 router.delete('/product/:productById/:userId', requireSignin, isAuth, isAdmin, deleteproduct)
