@@ -51,9 +51,8 @@ exports.OrderHistory = (req, res, next) => {
         history.push({
             _id: item._id,
             name: item.name,
-            desc: item.desc,
-            cateogory: item.category,
             quantity: item.count,
+            status: order.status,
             transaction_id: order.transaction_id,
             amount: order.amount
         })
@@ -75,7 +74,7 @@ exports.OrderHistory = (req, res, next) => {
 exports.StockUpdate = (req, res, next) => {
 
     const order = Order(req.body)
-    const product = order.product
+
     let bulkOps = order.product.map((item) => {
         return {
             updateOne: {
