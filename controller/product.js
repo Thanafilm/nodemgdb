@@ -33,9 +33,9 @@ exports.create = (req, res) => {
             });
         }
         // check for all fields
-        const { name, desc, price, category, quantity, shipping, size } = fields;
+        const { name, desc, price, category, quantity,  } = fields;
 
-        if (!name || !desc || !price || !category || !quantity || !shipping || !size) {
+        if (!name || !desc || !price || !category || !quantity ) {
             return res.status(400).json({
                 error: 'All fields are required'
             });
