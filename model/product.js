@@ -6,13 +6,13 @@ const productSchema = new mongoose.Schema(
             type: String,
             trim: true,
             required: true,
-            maxlength: 32
+            maxlength: 300
         },
         desc: {
             type: String,
             trim: true,
             required: true,
-            maxlength: 2000
+            maxlength: 4000
         },
         price: {
             type: Number,
@@ -20,13 +20,6 @@ const productSchema = new mongoose.Schema(
             required: true,
             maxlength: 32
         },
-        size: {
-            type: String,
-            trim: true,
-            required: true,
-            maxlength: 32
-        }
-        ,
         category: {
             type: ObjectId,
             ref: "Category",
@@ -43,10 +36,6 @@ const productSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
-        shipping: {
-            required: false,
-            type: Boolean
-        }
     },
     { timestamps: true }
 )

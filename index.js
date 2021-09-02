@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 require('dotenv').config()
 // DB Connect
 
-
+port = process.env.PORT || 4000
 //MiddleWares
 app.use(cors())
 app.use(express.urlencoded({ extended: true }));
@@ -33,4 +33,4 @@ app.use('/api', ProductRouter)
 app.use('/api', BraintreeRouter)
 app.use('/api', OrderROuter)
 connectDB();
-app.listen(4000)
+app.listen(port)
