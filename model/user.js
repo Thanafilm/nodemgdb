@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true,
             required: true,
-            maxlength : 32
+            maxlength: 32
         },
         email: {
             type: String,
@@ -55,13 +55,27 @@ userSchema
         return this._password;
     });
 
+userSchema.virtual('confirmPassword')
+    .get(function () {
+        return this._confirmPassword
+    })
+    .set(function (value) {
+        this._confirmPassword = value
+    })
+
+userSchema.pre('validate',function(next) {
+    if (this._password !== this._confirmPassword) {
+        this.invalidate('confirmPassword','Password not match')
+    }
+    next()
+})
+
 userSchema.methods = {
     authenticate: function (plainText) {
         return this.encryptPassword(plainText) === this.hashed_password;
     },
 
     encryptPassword: function (password) {
-        if (!password) return '';
         try {
             return crypto
                 .createHmac('sha1', this.salt)

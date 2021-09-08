@@ -7,11 +7,10 @@ const secretKey = process.env.SECRET
 exports.signup = (req, res) => {
     // console.log("req.body", req.body);
     const user = new User(req.body);
-    user.save((err, user) => {
-        if (err) {
+    user.save((error, user) => {
+        if (error) {
             return res.status(400).json({
-
-                err: errorHandler(err)
+                error: errorHandler(error) ||  error.errors.confirmPassword.message
             });
         }
         user.salt = undefined;
@@ -31,8 +30,7 @@ exports.signin = (req, res) => {
                 error: 'User with that email does not exist. Please signup'
             });
         }
-        // if user is found make sure the email and password match
-        // create authenticate method in user model
+
         if (!user.authenticate(password)) {
             return res.status(401).json({
                 error: 'Email and password dont match'
